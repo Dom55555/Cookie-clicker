@@ -44,8 +44,6 @@ public class GameManager : MonoBehaviour
         }
 
         stonesText.text = stones.ToString();
-        basicAmountText.text = basicMiners.ToString();
-        basicPriceText.text = "Price: " + (Math.Ceiling(50*(Math.Pow(1.3,basicMiners)))).ToString();
     }
     private void OnApplicationQuit()
     {
@@ -60,6 +58,8 @@ public class GameManager : MonoBehaviour
             buySound.Play();
             basicMiners++;
             stones -= price;
+            basicAmountText.text = basicMiners.ToString();
+            basicPriceText.text = "Price: " + (Math.Ceiling(price * 1.3)).ToString();
         }
     }
     public void addStones()
@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
         stones = PlayerPrefs.GetInt("stones",0);
         basicMiners = PlayerPrefs.GetInt("basicMiners");
         goldenMiners = PlayerPrefs.GetInt("goldenMiners");
+        basicAmountText.text = basicMiners.ToString();
+        basicPriceText.text = "Price: " + (Math.Ceiling(50 * (Math.Pow(1.3, basicMiners)))).ToString();
     }
 
 }
