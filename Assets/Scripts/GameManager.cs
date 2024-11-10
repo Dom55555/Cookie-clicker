@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public TMP_Text AmountBasicMiners_Text;
     public TMP_Text BasicMinerPrice_Text;
+    public TMP_Text AmountGoldenMiners_Text;
+    public TMP_Text GoldenMinerPrice_Text;
+
     public TMP_Text StonesAmount_Text;
     public TMP_Text CPS_Text;
 
@@ -69,6 +72,18 @@ public class GameManager : MonoBehaviour
             BasicMinerPrice_Text.text = "Price: " + digitFormat(basicMinerPrice);
         }
     }
+    public void BuyGoldenMiner()
+    {
+        if (!(stones < goldenMinerPrice))
+        {
+            buySound.Play();
+            goldenMiners++;
+            stones -= goldenMinerPrice;
+            AmountGoldenMiners_Text.text = goldenMiners.ToString();
+            goldenMinerPrice = (int)(goldenMinerPrice * 1.2);
+            GoldenMinerPrice_Text.text = "Price: " + digitFormat(goldenMinerPrice);
+        }
+    }
     public void addStones(int amount = 1)
     {
         stones+= amount;
@@ -82,10 +97,9 @@ public class GameManager : MonoBehaviour
         {
             return number.ToString();
         }
-        int first = int.Parse(number.ToString().Substring(0, (length - 1) % 3+1));
-        newNumber += first.ToString() + ".";
-        int second = int.Parse(number.ToString().Substring((length-1)%3+1,2));
-        newNumber += second.ToString();
+        int firstpart = int.Parse(number.ToString().Substring(0, (length - 1) % 3+1));
+        int secondpart = int.Parse(number.ToString().Substring((length-1)%3+1 , 2));
+        newNumber = firstpart + "." + secondpart;
         if(length < 7)
         {
             newNumber += "k";
@@ -100,21 +114,27 @@ public class GameManager : MonoBehaviour
     void Save()
     {
         PlayerPrefs.SetInt("stones", stones);
+
         PlayerPrefs.SetInt("basicMiners", basicMiners);
         PlayerPrefs.SetInt("basicMinerPrice",basicMinerPrice);
+
         PlayerPrefs.SetInt("goldenMiners",goldenMiners);
         PlayerPrefs.SetInt("goldenMinerPrice",goldenMinerPrice);
     }
     void Load()
     {
         stones = PlayerPrefs.GetInt("stones",0);
+
         basicMiners = PlayerPrefs.GetInt("basicMiners",0);
         basicMinerPrice = PlayerPrefs.GetInt("basicMinerPrice",50);
+
         goldenMiners = PlayerPrefs.GetInt("goldenMiners",0);
         goldenMinerPrice = PlayerPrefs.GetInt("goldenMinerPrice",500);
 
         AmountBasicMiners_Text.text = basicMiners.ToString();
+        AmountGoldenMiners_Text.text = goldenMiners.ToString();
         BasicMinerPrice_Text.text = "Price: " + digitFormat(basicMinerPrice);
+        GoldenMinerPrice_Text.text = "Price: " + digitFormat(goldenMinerPrice);
     }
 
 }

@@ -1004,11 +1004,11 @@ MonoBehaviour:
       - m_Target: {fileID: 647807438}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: addStones
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1174,9 +1174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b960b0f286547f74fb7bc8ffc886079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicAmountText: {fileID: 945214720}
-  basicPriceText: {fileID: 975026016}
-  stonesText: {fileID: 1059362041}
+  AmountBasicMiners_Text: {fileID: 945214720}
+  BasicMinerPrice_Text: {fileID: 975026016}
+  AmountGoldenMiners_Text: {fileID: 1000023054}
+  GoldenMinerPrice_Text: {fileID: 1161009492}
+  StonesAmount_Text: {fileID: 1059362041}
+  CPS_Text: {fileID: 836454168}
 --- !u!4 &647807439
 Transform:
   m_ObjectHideFlags: 0
@@ -1695,8 +1698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 185.66, y: -21.451}
-  m_SizeDelta: {x: 348.8142, y: 74.638}
+  m_AnchoredPosition: {x: 185.66, y: -22.3043}
+  m_SizeDelta: {x: 324.922, y: 72.9315}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &975026016
 MonoBehaviour:
@@ -1745,8 +1748,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2098,7 +2101,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 185.66, y: -21}
-  m_SizeDelta: {x: 334.0905, y: 61.8593}
+  m_SizeDelta: {x: 311.22, y: 61.8593}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1161009492
 MonoBehaviour:
@@ -2147,8 +2150,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
