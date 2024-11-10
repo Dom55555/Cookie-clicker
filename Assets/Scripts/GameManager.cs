@@ -18,14 +18,15 @@ public class GameManager : MonoBehaviour
     }
     public void BuyBasicMiner()
     {
-        if(!(int.Parse(stonesText.text)< int.Parse(basicPriceText.text.Substring(7))))
+        int price = int.Parse(basicPriceText.text.Substring(7));
+        if(!(int.Parse(stonesText.text)< price))
         {
             buySound.Play();
             basicMiners++;
-            stones -= int.Parse(basicPriceText.text.Substring(7));
+            stones -= price;
             basicAmountText.text = basicMiners.ToString();
             stonesText.text = stones.ToString();
-            basicPriceText.text = "Price: "+Math.Ceiling((50 * Math.Pow(1.3,basicMiners))).ToString();
+            basicPriceText.text = "Price: " + (Math.Ceiling(price * 1.3)).ToString();
 
         }
     }
