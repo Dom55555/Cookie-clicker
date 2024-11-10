@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     int basicMiners = 0;
     int goldenMiners = 0;
-    int stones = 0;
+    int stones;
 
     float clickTimer;
     float saveTimer;
@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
             buySound.Play();
             basicMiners++;
             stones -= price;
-            basicPriceText.text = "Price: " + (Math.Ceiling(price * 1.3)).ToString();
         }
     }
     public void addStones()
@@ -76,7 +75,7 @@ public class GameManager : MonoBehaviour
     }
     void Load()
     {
-        stones = PlayerPrefs.GetInt("stones");
+        stones = PlayerPrefs.GetInt("stones",0);
         basicMiners = PlayerPrefs.GetInt("basicMiners");
         goldenMiners = PlayerPrefs.GetInt("goldenMiners");
     }
