@@ -5,24 +5,36 @@ using UnityEngine;
 using System;
 using System.Globalization;
 using Unity.VisualScripting;
+using System.Linq;
+using UnityEngine.UI;
+using UnityEngine.Timeline;
 public class GameManager : MonoBehaviour
 {
     public TMP_Text AmountBasicMiners_Text;
     public TMP_Text BasicMinerPrice_Text;
     public TMP_Text AmountGoldenMiners_Text;
     public TMP_Text GoldenMinerPrice_Text;
+    public TMP_Text AmountUpgrades_Text;
+    public TMP_Text UpgradePrice_Text;
 
     public TMP_Text StonesAmount_Text;
     public TMP_Text CPS_Text;
 
-    AudioSource buySound;
+    public Button BasicMinerButton;
+    public Button GoldenMinerButton;
+    public Button UpgradeButton;
 
-    int basicMiners = 0;
+    int basicMiners;
     int basicMinerPrice;
-    int goldenMiners = 0;
+
+    int goldenMiners;
     int goldenMinerPrice;
 
-    int stones;
+    int upgradesAmount;
+    int upgradePrice;
+    int clickPower;
+
+    public int stones;
     int cps;
 
     float clickTimer;
@@ -30,8 +42,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        buySound = GetComponent<AudioSource>();
         Load();
+        clickPower = (int)(1 * Math.Pow(2,upgradesAmount));
     }
 
     private void Update()
@@ -43,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         if (clickTimer >= 1)
         {
-            addStones(cps);
+            stones += cps;
             clickTimer = 0;
         }
         if (saveTimer >= 10)
@@ -51,6 +63,10 @@ public class GameManager : MonoBehaviour
             Save();
             saveTimer = 0;
         }
+
+        BasicMinerButton.interactable = stones >= basicMinerPrice;
+        GoldenMinerButton.interactable = stones >= goldenMinerPrice;
+        UpgradeButton.interactable= stones >= upgradePrice;
 
         StonesAmount_Text.text = digitFormat(stones);
         CPS_Text.text = digitFormat(cps) + " stones/sec";
@@ -62,31 +78,33 @@ public class GameManager : MonoBehaviour
 
     public void BuyBasicMiner()
     {
-        if(!(stones < basicMinerPrice))
-        {
-            buySound.Play();
-            basicMiners++;
-            stones -= basicMinerPrice;
-            AmountBasicMiners_Text.text = basicMiners.ToString();
-            basicMinerPrice = (int)(basicMinerPrice * 1.3);
-            BasicMinerPrice_Text.text = "Price: " + digitFormat(basicMinerPrice);
-        }
+        basicMiners++;
+        stones -= basicMinerPrice;
+        AmountBasicMiners_Text.text = basicMiners.ToString();
+        basicMinerPrice = (int)(basicMinerPrice * 1.3);
+        BasicMinerPrice_Text.text = "Price: " + digitFormat(basicMinerPrice);
     }
     public void BuyGoldenMiner()
     {
-        if (!(stones < goldenMinerPrice))
-        {
-            buySound.Play();
-            goldenMiners++;
-            stones -= goldenMinerPrice;
-            AmountGoldenMiners_Text.text = goldenMiners.ToString();
-            goldenMinerPrice = (int)(goldenMinerPrice * 1.2);
-            GoldenMinerPrice_Text.text = "Price: " + digitFormat(goldenMinerPrice);
-        }
+        goldenMiners++;
+        stones -= goldenMinerPrice;
+        AmountGoldenMiners_Text.text = goldenMiners.ToString();
+        goldenMinerPrice = (int)(goldenMinerPrice * 1.2);
+        GoldenMinerPrice_Text.text = "Price: " + digitFormat(goldenMinerPrice);
     }
-    public void addStones(int amount = 1)
+    public void BuyClickUpgrade()
     {
-        stones+= amount;
+        upgradesAmount++;
+        clickPower *= 2;
+        stones -= upgradePrice;
+        upgradePrice *= 4;
+        UpgradePrice_Text.text = "Price: "+digitFormat(upgradePrice);
+        AmountUpgrades_Text.text = upgradesAmount.ToString();
+    }
+
+    public void addStones()
+    {
+        stones += clickPower;
     }
 
     string digitFormat(int number)
@@ -108,6 +126,7 @@ public class GameManager : MonoBehaviour
         {
             newNumber += "m";
         }
+        StonesAmount_Text.fontSize = 150 - 4 * newNumber.Count();
         return newNumber;
     }
 
@@ -120,6 +139,9 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("goldenMiners",goldenMiners);
         PlayerPrefs.SetInt("goldenMinerPrice",goldenMinerPrice);
+
+        PlayerPrefs.SetInt("upgradesAmount", upgradesAmount);
+        PlayerPrefs.SetInt("upgradePrice", upgradePrice);
     }
     void Load()
     {
@@ -131,10 +153,15 @@ public class GameManager : MonoBehaviour
         goldenMiners = PlayerPrefs.GetInt("goldenMiners",0);
         goldenMinerPrice = PlayerPrefs.GetInt("goldenMinerPrice",500);
 
+        upgradesAmount = PlayerPrefs.GetInt("upgradesAmount", 0);
+        upgradePrice = PlayerPrefs.GetInt("upgradePrice", 20);
+
         AmountBasicMiners_Text.text = basicMiners.ToString();
         AmountGoldenMiners_Text.text = goldenMiners.ToString();
+        AmountUpgrades_Text.text = upgradesAmount.ToString();
         BasicMinerPrice_Text.text = "Price: " + digitFormat(basicMinerPrice);
         GoldenMinerPrice_Text.text = "Price: " + digitFormat(goldenMinerPrice);
+        UpgradePrice_Text.text = "Price: " + digitFormat(upgradePrice);
     }
 
 }
