@@ -33,8 +33,8 @@ public class Stone : MonoBehaviour
         if(transform.localScale.x > 1f)
         {
             transform.localScale -= Time.deltaTime * 0.5f * Vector3.one;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, 0f, 0f),45*Time.deltaTime);
         }
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0f, 0f, 0f),45*Time.deltaTime);
     }
     void OnMouseDown()
     {

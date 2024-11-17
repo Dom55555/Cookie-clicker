@@ -115,8 +115,8 @@ public class GameManager : MonoBehaviour
         {
             return number.ToString();
         }
-        int firstpart = int.Parse(number.ToString().Substring(0, (length - 1) % 3+1));
-        int secondpart = int.Parse(number.ToString().Substring((length-1)%3+1 , 2));
+        string firstpart = number.ToString().Substring(0, (length - 1) % 3+1);
+        string secondpart = number.ToString().Substring((length - 1) % 3 + 1, 2).ToString().PadLeft(2,'0');
         newNumber = firstpart + "." + secondpart;
         if(length < 7)
         {
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         {
             newNumber += "m";
         }
-        StonesAmount_Text.fontSize = 150 - 4 * newNumber.Count();
+        StonesAmount_Text.fontSize = 150 - 4 * newNumber.Length;
         return newNumber;
     }
 
