@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
     public void addStones()
     {
         stones += clickPower;
+        print(digitFormat(2041));
     }
 
     string digitFormat(int number)
@@ -116,7 +117,7 @@ public class GameManager : MonoBehaviour
             return number.ToString();
         }
         string firstpart = number.ToString().Substring(0, (length - 1) % 3+1);
-        string secondpart = number.ToString().Substring((length - 1) % 3 + 1, 2).ToString().PadLeft(2,'0');
+        string secondpart = number.ToString().Substring((length - 1) % 3 + 1, 2).ToString();
         newNumber = firstpart + "." + secondpart;
         if(length < 7)
         {
